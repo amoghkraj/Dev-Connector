@@ -33,5 +33,4 @@ app.use("/api/users", users);
 app.use("/api/profiles", profiles);
 app.use("/api/posts", posts);
 
-app.get("/", (req, res) => res.send("Hello!"));
 app.listen(port, () => console.log(`Server running on ${port}`));
