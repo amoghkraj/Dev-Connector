@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { registerUser } from "../../actions/authActions";
+
 import classnames from "classnames";
 
 class Register extends Component {
@@ -24,6 +27,12 @@ class Register extends Component {
     }));
   }
 
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
   onSubmit(e) {
     e.preventDefault();
     const newUser = {
@@ -32,11 +41,15 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
+    this.props.regiserUser(newUser, this.props.history);
+  }
 
-    axios
-      .post("api/users/register", newUser)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState(() => ({ errors: err.response.data })));
+  componentWillReceiveProps(newProps) {
+    if (newProps.errors) {
+      this.setState(() => ({
+        errors: newProps.errors
+      }));
+    }
   }
 
   render() {
@@ -125,4 +138,16 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapDispatchToProps = (dispatch, props) => ({
+  regiserUser: (user, history) => dispatch(registerUser(user, history))
+});
+
+const mapStateToProps = (state, props) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Register));
