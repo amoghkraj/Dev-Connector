@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { clearCurrentProfile } from "../../actions/profileActions";
 
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
-    window.location.href = "/";
+    //window.location.href = "/";
   }
   render() {
     const { isAuthenticated, user } = this.props.auth;
@@ -80,7 +82,8 @@ class Navbar extends Component {
 }
 
 const mapDispatchToProps = (dispatch, props) => ({
-  logoutUser: () => dispatch(logoutUser())
+  logoutUser: () => dispatch(logoutUser()),
+  clearCurrentProfile: () => dispatch(clearCurrentProfile())
 });
 
 const mapStateToProps = (state, props) => ({
