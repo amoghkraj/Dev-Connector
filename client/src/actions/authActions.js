@@ -22,10 +22,10 @@ export const loginUser = userData => {
         // Save token to localStorage
         const { token } = res.data;
         localStorage.setItem("jwtToken", token);
+        //Set token to header
+        setTokenToReqHeader(token);
         //decode the token
         const decoded = jwt_decode(token);
-        //Set token to header
-        setTokenToReqHeader(decoded);
         // Set current user
         dispatch(setCurrentUser(decoded));
       })

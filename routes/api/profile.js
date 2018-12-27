@@ -64,6 +64,7 @@ router.post(
       profileFields.skills = req.body.skills.split(",");
     }
     //social
+    profileFields.social = {};
     if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
     if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
     if (req.body.facebook) profileFields.social.facebook = req.body.facebook;

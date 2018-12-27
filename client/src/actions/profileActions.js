@@ -45,3 +45,20 @@ export const clearCurrentProfile = () => {
     type: "CLEAR_CURRENT_PROFILE"
   };
 };
+
+// Delete account & profile
+export const deleteAccount = () => {
+  return dispatch => {
+    if (window.confirm("Are you sure? This can NOT be undone!")) {
+      axios
+        .delete("/api/profile")
+        .then(res =>
+          dispatch({
+            type: "SET_CURRENT_USER",
+            payLoad: {}
+          })
+        )
+        .catch(err => dispatch(getErrors(err)));
+    }
+  };
+};
