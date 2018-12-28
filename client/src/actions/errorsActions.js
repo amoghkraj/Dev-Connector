@@ -1,7 +1,7 @@
 export const getErrors = errorData => {
   return {
     type: "GET_ERRORS",
-    payLoad: errorData.response.data
+    payload: errorData.response.data
   };
 };
 

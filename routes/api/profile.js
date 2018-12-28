@@ -162,7 +162,7 @@ router.post(
 //@route    DELETE api/profile/experience/:exp_id
 //@desc     Delete experience from profile
 //@access   Private
-router.post(
+router.delete(
   "/experience/:exp_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -184,19 +184,21 @@ router.post(
 //@route    DELETE api/profile/education/:edu_id
 //@desc     Delete education from profile
 //@access   Private
-router.post(
+router.delete(
   "/education/:edu_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Profile.findOne({ user: req.user.id })
       .then(profile => {
-        //Get the index of experience form the array
-        const removeIndex = profile.experience
+        // Get remove index
+        const removeIndex = profile.education
           .map(item => item.id)
           .indexOf(req.params.edu_id);
-        //remove the experience
-        profile.experience.splice(removeIndex, 1);
-        //save the profile
+
+        // Splice out of array
+        profile.education.splice(removeIndex, 1);
+
+        // Save
         profile.save().then(profile => res.json(profile));
       })
       .catch(err => res.status(404).json(err));
@@ -227,7 +229,7 @@ router.get("/handle/:handle", (req, res) => {
   const errors = {};
   Profile.findOne({ handle: req.params.handle })
     //join user details
-    .populate("users", ["name", "avatar"])
+    .populate("user", ["name", "avatar"])
     .then(profile => {
       if (!profile) {
         errors.noprofile = "There is no profile for this user";
@@ -267,7 +269,7 @@ router.get("/all", (req, res) => {
   const errors = {};
   Profile.find()
     //join user details
-    .populate("users", ["name", "avatar"])
+    .populate("user", ["name", "avatar"])
     .then(profile => {
       if (!profile) {
         errors.noprofile = "There are no profile";

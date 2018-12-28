@@ -3,7 +3,7 @@ const initialState = {};
 export default (state = initialState, action) => {
   switch (action.type) {
     case "GET_ERRORS":
-      return action.payLoad;
+      return action.payload;
     case "CLEAR_ERRORS":
       return {};
     default:

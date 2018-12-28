@@ -12,6 +12,11 @@ import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
+import AddEducation from "./components/add-credentials/AddEducation";
+import AddExperience from "./components/add-credentials/AddExperience";
+import Profiles from "./components/profiles/Profiles";
+import Profile from "./components/profile/Profile";
+import NotFound from "./components/not-found/NotFound";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -55,6 +60,8 @@ class App extends Component {
               <Switch>
                 <Route path="/login" component={Login} exact />
                 <Route path="/register" component={Register} exact />
+                <Route exact path="/profile/:handle" component={Profile} />
+                <Route exact path="/profiles" component={Profiles} />
                 <PrivateRoute path="/dashboard" component={Dashboard} exact />
                 <PrivateRoute
                   exact
@@ -66,6 +73,17 @@ class App extends Component {
                   component={EditProfile}
                   exact
                 />
+                <PrivateRoute
+                  exact
+                  path="/add-experience"
+                  component={AddExperience}
+                />
+                <PrivateRoute
+                  exact
+                  path="/add-education"
+                  component={AddEducation}
+                />
+                <Route exact path="/not-found" component={NotFound} />
               </Switch>
             </div>
             <Footer />
